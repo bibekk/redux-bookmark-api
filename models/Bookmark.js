@@ -21,31 +21,6 @@ var Bookmark ={
   deleteBookmark: function(id,callback){
       return db.query("DELETE FROM tbl_bookmarks WHERE id=?",[id],callback);
   },
-
-
-
-
-  getSoftwareById: function(id,callback){
-      return db.query("SELECT * FROM software.tbl_software WHERE tbl_software_id=?",[id],callback);
-  },
-
-  addSoftware: function(Software,callback){ //console.log(Software.id);
-      return db.query("Insert into tbl_software(software_id,software_name,software_type) values(?,?,?)",[Software.software_id, Software.software_name, Software.software_type],callback);
-  },
-
-  updateSoftwareByID: function(id,Software,callback){ //console.log(id,Software.software_name);
-      return db.query("UPDATE tbl_software SET software_name=? WHERE software_id =?",[Software.software_name, id],callback);
-  },
-  getMaxId:function(callback){
-      return db.query("SELECT max(software_id) AS maxid FROM software.tbl_software",callback);
-  },
-
-  updateSoftwareCategory: function(id,Software,callback){ //console.log(id,Software.Title,Software.Status);
-      return db.query("UPDATE software.tbl_software_type SET software_type=? WHERE tbl_software_typeid =?",[Software.software_type,id],callback);
-  },
-
-
-
 };
 
 module.exports = Bookmark;

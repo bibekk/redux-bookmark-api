@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 //adding new lines for mysqlapi
 var cors = require('cors');
 var bookmark = require('./routes/route_bookmark');
+var terms = require('./routes/route_terms')
 
 var index = require('./routes/index');
 //var blog = require('./routes/route_blog');
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/bookmark', bookmark);
+app.use('/bookmark/terms',terms)
 
 //for mysqlapi
 //app.use('/Softwares',Softwares);
