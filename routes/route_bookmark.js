@@ -48,6 +48,16 @@ router.post('/addBookmark',function(req,res,next){
    });
 });
 
+router.put('/updateBookmark',function(req,res,next){
+   Bookmark.updateBookmark(req.body,function(err,count){
+      if(err){
+          res.json(err);
+      } else{
+          res.json(count);
+      }
+   });
+});
+
 router.post('/addCat',function(req,res,next){ //console.log(req.body);
    Bookmark.addCat(req.body,function(err,count){
       if(err){
@@ -67,6 +77,17 @@ router.delete('/category/:id',function(req,res,next){
       }
    });
 });
+
+router.put('/updateCat',function(req,res,next){
+   Bookmark.updateCat(req.body,function(err,count){
+      if(err){
+          res.json(err);
+      } else{
+          res.json(count);
+      }
+   });
+});
+
 
 router.delete('/:id',function(req,res,next){
    Bookmark.deleteBookmark(req.params.id, function(err,rows){

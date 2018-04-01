@@ -12,11 +12,17 @@ var Bookmark ={
   addBookmark: function(body,callback) {
       return db.query("insert into tbl_bookmarks(url,cat_id) values('"+body.url+"',"+body.cat_id+")",callback)
   },
+  updateBookmark: function(body,callback) {
+      return db.query("update  tbl_bookmarks set url=?, cat_id=? where id = ?",[body.url,body.cat_id,body.id],callback)
+  },
   addCat: function(data,callback){
       return db.query("Insert into tbl_categories(category) values (?)",[data.category],callback);
   },
   deleteCat:function(id,callback){
       return db.query("DELETE FROM tbl_categories WHERE cat_id=?",[id],callback);
+  },
+  updateCat: function(body,callback) {
+      return db.query("update  tbl_categories set category=? where cat_id = ?",[body.category,body.cat_id],callback)
   },
   deleteBookmark: function(id,callback){
       return db.query("DELETE FROM tbl_bookmarks WHERE id=?",[id],callback);
