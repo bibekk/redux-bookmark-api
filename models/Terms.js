@@ -11,8 +11,6 @@ var Terms ={
       return db.query("delete from tbl_terms where id=?",[id],callback);
   },
 
-
-
   updateUser: function(id,User,callback){ //console.log(id,Task.Title,Task.Status);
       return db.query("update users set usertype=? where id =?",[User.usertype,id],callback);
   },
