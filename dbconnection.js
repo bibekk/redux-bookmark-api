@@ -1,9 +1,10 @@
-var mysql = require('mysql');
-var connection = mysql.createPool({
+var mariadb = require('mariadb');
+var pool = mariadb.createPool({
    host : 'localhost',
-   user : 'root',
-    password: 'root',
-    database: 'db_bookmark'
+   user : 'rasp',
+    password: 'rasp',
+    database: 'bookmarks_db',
+    connectionLimit: 100
 });
 
-module.exports = connection;
+module.exports = pool;

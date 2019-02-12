@@ -1,8 +1,19 @@
-var db = require('../dbconnection');
+var pool = require('../dbconnection');
 var Terms ={
-  getAllTerms: function(callback){
-      return db.query("select id,term from tbl_terms",callback);
-  },
+   getAllTerms: function(callback){
+	pool.getConnection(callback)
+	    .then(conn => {
+	      conn.query("SELECT 1 as val")
+	        .then((rows) => {
+		  let sqlquery = "select id,term from tbl_terms"
+	          return conn.query({rowsAsArray: false, sql: sqlquery});
+	      })
+	        .then((res) => { return callback(res)} )
+	        .catch(err => { console.log(err) })
+	
+	    }).catch(err => {console.log("not connected") })
+       },
+
   addTerm: function(Term,callback){ //console.log(Task.id);
       return db.query("Insert into tbl_terms(term) values(?)",[Term.term],callback);
   },
