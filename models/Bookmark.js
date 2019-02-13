@@ -27,6 +27,9 @@ var Bookmark ={
   deleteBookmark: function(id,callback){
       return db.query("DELETE FROM tbl_bookmarks WHERE id=?",[id],callback);
   },
+   getPass: function(pass,callback){
+       return db.query("select count(*) as total from tbl_session where id =2 and pass = ?", [pass],callback)
+   }
 };
 
 module.exports = Bookmark;

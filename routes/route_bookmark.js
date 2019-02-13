@@ -99,4 +99,16 @@ router.delete('/:id',function(req,res,next){
    });
 });
 
+
+//for pass
+router.get('/getPass/:pass',function(req,res,next){
+       Bookmark.getPass(req.params.pass,function(err,rows){
+          if(err){
+              res.json(err);
+          } else{
+              res.json(rows);
+          }
+       });
+});
+
 module.exports = router;
