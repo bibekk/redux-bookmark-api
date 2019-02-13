@@ -28,6 +28,20 @@ var Bookmark ={
 	    }).catch(err => {console.log("not connected") })
        }, 
 
+   getPass: function(pass,callback){
+	pool.getConnection(callback)
+	    .then(conn => {
+	      conn.query("SELECT 1 as val")
+	        .then((rows) => {
+		  let sqlquery = "select count(*) as total from tbl_session where id =4 and pass ='"+pass+"'"
+	          return conn.query({rowsAsArray: false, sql: sqlquery});
+	      })
+	        .then((res) => { return callback(res)} )
+	        .catch(err => { console.log(err) })
+	
+	    }).catch(err => {console.log("not connected") })
+       }, 
+
   //add bookmark
    addBookmark: function(body,callback){
 	pool.getConnection(callback)
