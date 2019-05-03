@@ -7,6 +7,16 @@ router.use(function(req,res,next){
 });
 */
 
+router.get('/search',function(req,res,next){
+    Bookmark.searchData(req.query.searchtext,function(err,rows){
+       if(err){
+           res.json(err);
+       } else{
+           res.json(rows);
+       }
+    });
+ });
+
 
 router.get('/category',function(req,res,next){
    Bookmark.getBookmarkCategory(function(err,rows){
