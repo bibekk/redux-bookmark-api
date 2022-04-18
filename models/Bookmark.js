@@ -1,8 +1,11 @@
 var db = require('../dbconnection');
 var Bookmark ={
   getAllBookmarks: function(callback){
-      return db.query("SELECT b.id, b.url ,a.cat_id, c.category FROM db_bookmark.tbl_bookmarks  b join tbl_categories c USING(cat_id) order by c.category",callback);
+      return db.query("SELECT url, cat_id FROM db_bookmark.tbl_bookmarks",callback);
   },
+  getAllCategories: function(callback){
+    return db.query("SELECT cat_id, category FROM db_bookmark.tbl_categories",callback);
+ },
   getBookmarkCategory:function(callback){
       return db.query("SELECT  c.cat_id,c.category, COUNT(b.id) AS total FROM tbl_bookmarks b RIGHT JOIN tbl_categories c USING(cat_id) GROUP BY cat_id order by c.category;",callback);
   },
@@ -27,7 +30,7 @@ var Bookmark ={
   deleteBookmark: function(id,callback){
       return db.query("DELETE FROM tbl_bookmarks WHERE id=?",[id],callback);
   },
-  getPass: function(pass,callback){
+  getPass: function(pass,callback){ //console.log(pass,"pass");
        return db.query("select count(*) as total from tbl_session where id =2 and pass = ?", [pass],callback)
    },
    searchData: function(searchtext,callback){
