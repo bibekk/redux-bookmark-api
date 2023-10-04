@@ -1,8 +1,8 @@
 const mysql = require("mysql")
 const connection = mysql.createPool({
   host: "localhost",
-  user: "root",
-  password: "root",
+  user: "bibek",
+  password: "Panacea@1",
   database: "db_bookmark", // 'ebookmark'
 })
 
