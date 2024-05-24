@@ -7,6 +7,8 @@ var Terms = {
 
   deleteTerm: (id, callback) => db.query('delete from tbl_terms where id=?', [id], callback),
 
+  updateTerm: (body,callback) => db.query('update tbl_terms set term=? where id=?',[body.term, body.id],callback),
+
   updateUser: (id, User, callback) => db.query('update users set usertype=? where id =?', [User.usertype, id], callback),
 
   getMaxId: (callback) => db.query('select max(id) as maxid from users', callback),

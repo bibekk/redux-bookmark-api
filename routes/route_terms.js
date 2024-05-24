@@ -11,10 +11,14 @@ router.delete('/:id',(req,res,next)=>Term.deleteTerm(req.params.id, (err,rows)=>
 router.get('/maxid',(req,res,next)=>Task.getMaxId((err,count)=>err? res.json(err): res.json(count)));
 
 router.get('/:id',(req,res,next)=>{
-   if(req.params.id){
-       Task.getUserById(req.params.id, (err,rows)=>err? res.json(err): res.json(rows))
-    }
+  if(req.params.id){
+    Task.getUserById(req.params.id, (err,rows)=>err? res.json(err): res.json(rows))
+  }
 });
+
+router.put('/updateTerm', (req, res) => { 
+  Term.updateTerm(req.body, (err, count) => (err ? res.json(err) : res.json(count)))
+})
 
 router.put('/:id',(req,res,next)=>Task.updateUser(req.params.id,req.body,(err,rows)=>err? res.json(err): res.json(rows)));
 

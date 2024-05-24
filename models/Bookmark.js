@@ -1,14 +1,15 @@
 var db = require("../dbconnection")
-var Bookmark = {
+
+const Bookmark = {
   getAllBookmarks: function (callback) {
     return db.query("SELECT url, cat_id, pin FROM db_bookmark.tbl_bookmarks", callback)
   },
   getAllCategories: function (callback) {
-    return db.query("SELECT cat_id, category FROM db_bookmark.tbl_categories", callback)
+    return db.query("SELECT cat_id, category FROM db_bookmark.tbl_categories order by category", callback)
   },
   getBookmarkCategory: function (callback) {
     return db.query(
-      "SELECT  c.cat_id,c.category, COUNT(b.id) AS total FROM tbl_bookmarks b RIGHT JOIN tbl_categories c USING(cat_id) GROUP BY cat_id order by c.category;",
+      "SELECT  c.cat_id,c.category, COUNT(b.id) AS total,c.parent_cat_id  FROM tbl_bookmarks b RIGHT JOIN tbl_categories c USING(cat_id) GROUP BY cat_id order by c.category asc;",
       callback
     )
   },
@@ -25,10 +26,10 @@ var Bookmark = {
   updateBookmark: function (body, callback) {
     return db.query("update  tbl_bookmarks set url=?, cat_id=?, pin=? where id = ?", [body.url, body.cat_id,body.pin, body.id], callback)
   },
-  updateBookmarkPin: function (body, callback) {
+  updateBookmarkPin: function (body, callback) { //console.log(body)
     return db.query("update  tbl_bookmarks set  pin=? where id = ?", [body.pin, body.id], callback)
   },
-  addCat: function (data, callback) {
+  addCat: function (data, callback) { //console.log(data)
     return db.query("Insert into tbl_categories(category) values (?)", [data.category], callback)
   },
   deleteCat: function (id, callback) {
@@ -37,14 +38,14 @@ var Bookmark = {
   updateCat: function (body, callback) {
     return db.query("update  tbl_categories set category=? where cat_id = ?", [body.category, body.cat_id], callback)
   },
-  // getCategoryHierarchy: function (callback) {
-  //   return db.query("SELECT c.cat_id as primary_cat_id,  c.category as primary_cat,d.cat_id as secondary_cat_id, d.category as secondary_cat FROM db_bookmark.tbl_categories c join db_bookmark.tbl_categories d where c.cat_id = d.parent_cat_id", callback)
-  // },
+  updateCatParent: function (body,callback) { //console.log(body); return;
+    return db.query("update tbl_categories set parent_cat_id=? where cat_id=?",[body.parent_cat_id,body.cat_id],callback)
+  },
+
   deleteBookmark: function (id, callback) {
     return db.query("DELETE FROM tbl_bookmarks WHERE id=?", [id], callback)
   },
   getPass: function (pass, callback) {
-    //console.log(pass,"pass");
     return db.query("select count(*) as total from tbl_session where id =2 and pass = ?", [pass], callback)
   },
   searchData: function (searchtext, callback) {
