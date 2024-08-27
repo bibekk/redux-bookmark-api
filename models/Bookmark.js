@@ -51,6 +51,9 @@ const Bookmark = {
   searchData: function (searchtext, callback) {
     return db.query("select * from tbl_bookmarks where url like  '%" + searchtext + "%'", callback)
   },
+  searchDataExact: function (searchtext, callback) {
+    return db.query("select * from tbl_bookmarks where url =  '" + searchtext + "'", callback)
+  },
 }
 
 module.exports = Bookmark

@@ -9,6 +9,10 @@ router.get('/search', (req, res) => {
   Bookmark.searchData(req.query.searchtext, (err, rows) => (err ? res.json(err) : res.json(rows)))
 })
 
+router.get('/searchExact', (req, res) => {
+  Bookmark.searchDataExact(req.query.searchtext, (err, rows) => (err ? res.json(err) : res.json(rows)))
+})
+
 router.get('/category', (req, res) => {
   Bookmark.getBookmarkCategory((err, rows) => (err ? res.json(err) : res.json(rows)))
 })
