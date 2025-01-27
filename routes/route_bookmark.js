@@ -9,8 +9,8 @@ router.get('/search', (req, res) => {
   Bookmark.searchData(req.query.searchtext, (err, rows) => (err ? res.json(err) : res.json(rows)))
 })
 
-router.get('/searchExact', (req, res) => {
-  Bookmark.searchDataExact(req.query.searchtext, (err, rows) => (err ? res.json(err) : res.json(rows)))
+router.put('/searchExact', (req, res) => {
+  Bookmark.searchDataExact(req.body, (err, rows) => (err ? res.json(err) : res.json(rows)))
 })
 
 router.get('/category', (req, res) => {
@@ -19,6 +19,10 @@ router.get('/category', (req, res) => {
 
 router.get('/fetchCategoryHierarchy', (req, res) => {
   Bookmark.getCategoryHierarchy((err, rows) => (err ? res.json(err) : res.json(rows)))
+})
+
+router.get('/getTotalBookmarks', (req, res) => {
+  Bookmark.getTotalBookamarks((err, rows) => (err ? res.json(err) : res.json(rows)))
 })
 
 

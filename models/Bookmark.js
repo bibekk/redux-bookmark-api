@@ -1,21 +1,24 @@
 var db = require("../dbconnection")
 
 const Bookmark = {
+  getTotalBookamarks: function(callback) {
+    return db.query("SELECT count(*) as total  FROM db_bookmark.tbl_bookmarks;", callback)
+  },
   getAllBookmarks: function (callback) {
     return db.query("SELECT url, cat_id, pin FROM db_bookmark.tbl_bookmarks", callback)
   },
   getAllCategories: function (callback) {
-    return db.query("SELECT cat_id, category FROM db_bookmark.tbl_categories order by category", callback)
+    return db.query("SELECT cat_id, category, color FROM db_bookmark.tbl_categories order by category", callback)
   },
   getBookmarkCategory: function (callback) {
     return db.query(
-      "SELECT  c.cat_id,c.category, COUNT(b.id) AS total,c.parent_cat_id  FROM tbl_bookmarks b RIGHT JOIN tbl_categories c USING(cat_id) GROUP BY cat_id order by c.category asc;",
+      "SELECT  c.cat_id,c.category,c.color, COUNT(b.id) AS total,c.parent_cat_id  FROM tbl_bookmarks b RIGHT JOIN tbl_categories c USING(cat_id) GROUP BY cat_id order by c.category asc;",
       callback
     )
   },
   getBookmarksByCategory: function (cat_id, callback) {
     return db.query(
-      "SELECT a.id, a.url,a.cat_id,a.pin, b.category from tbl_bookmarks a JOIN tbl_categories b using(cat_id) where cat_id=? order by pin desc,a.id desc",
+      "SELECT a.id, a.url,a.cat_id,a.pin, b.category, b.color from tbl_bookmarks a JOIN tbl_categories b using(cat_id) where cat_id=? order by pin desc,a.id desc",
       [cat_id],
       callback
     )
@@ -36,7 +39,7 @@ const Bookmark = {
     return db.query("DELETE FROM tbl_categories WHERE cat_id=?", [id], callback)
   },
   updateCat: function (body, callback) {
-    return db.query("update  tbl_categories set category=? where cat_id = ?", [body.category, body.cat_id], callback)
+    return db.query("update  tbl_categories set category=?, color =?  where cat_id = ?", [body.category, body.color, body.cat_id], callback)
   },
   updateCatParent: function (body,callback) { //console.log(body); return;
     return db.query("update tbl_categories set parent_cat_id=? where cat_id=?",[body.parent_cat_id,body.cat_id],callback)
@@ -51,8 +54,9 @@ const Bookmark = {
   searchData: function (searchtext, callback) {
     return db.query("select * from tbl_bookmarks where url like  '%" + searchtext + "%'", callback)
   },
-  searchDataExact: function (searchtext, callback) {
-    return db.query("select * from tbl_bookmarks where url =  '" + searchtext + "'", callback)
+  searchDataExact: function (body, callback) {
+    //console.log(body.searchtext)
+    return db.query("select * from tbl_bookmarks where url=?", [body.searchtext],callback)
   },
 }
 
